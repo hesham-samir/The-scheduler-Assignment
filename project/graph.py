@@ -1,11 +1,14 @@
+##############################################################################
+#   module name : GraphClass                                                 #                           #
+#   function : 1 - takes number of process at initialization                 #
+#              2 - use add_bar function to add graph burst time              #
+#                    - the function takes process number and burst tim       #
+#                    - each process is assigned to unique random color       #
+#                                                                            #
+##############################################################################
 import matplotlib.pyplot as plt
 import matplotlib as mpl
 import random
-
-
-# class Graph defines the input to the graph, Graph needs 2 lists :
-#   list of id of process (starts from process q not zero)
-#   list of burst time
 
 
 class GraphClass:
@@ -18,7 +21,7 @@ class GraphClass:
         self.burst_list = [0.000000000001]
         # list of all processes in the Gantt chart
         self.processes_list = []
-        # mapping random file for each process
+        # mapping random color for each process
         r = lambda: random.randint(0, 255)
         for i in range(processes_number):
             self.colors_list.append('#%02X%02X%02X' % (r(), r(), r()))
@@ -27,6 +30,9 @@ class GraphClass:
         last_burst_time = self.burst_list[-1]
         self.burst_list.append(burst_time + last_burst_time)
         self.processes_list.append(self.colors_list[processes_no])
+
+    def get_color_list(self):
+        return self.colors_list
 
     def plot_graph(self):
         fig, ax = plt.subplots(figsize=(6, 1))
