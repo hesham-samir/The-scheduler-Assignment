@@ -1,38 +1,41 @@
-from PyQt5.QtWidgets import QVBoxLayout, QWidget, QLabel, QLineEdit, QPushButton, QHBoxLayout, QTableWidget, QTableWidgetItem
-from PyQt5.QtCore import pyqtSlot
-
+from PyQt5.QtWidgets import QVBoxLayout, QWidget,QFrame, QLabel, QLineEdit, QPushButton, QHBoxLayout, QGridLayout,QTableWidget, QTableWidgetItem
+from PyQt5.QtGui import QPainter, QColor, QBrush
+from PyQt5.QtCore import QRect
 
 class RRClass(QWidget):
     def __init__(self):
         super().__init__()
         self.queue = []
-        self.b = QPushButton('Push Me')
-        self.l = QLabel('I have not been clicked yet')
+        self.add_btn = QPushButton('add process')
+        self.label = QLabel('I have not been clicked yet')
         self.x = QLabel("enter process time  : ")
         self.i = QLineEdit()
         self.tableWidget = QTableWidget()
+        self.plot_btn = QPushButton('plot')
+        self.count = 0;
+
+
         h_box = QHBoxLayout()
         h_box.addStretch()
-        h_box.addWidget(self.l)
+        h_box.addWidget(self.label)
         h_box.addStretch()
 
-        v_box = QVBoxLayout()
-        v_box.addWidget(self.x)
-        v_box.addWidget(self.i)
-        v_box.addWidget(self.b)
-        v_box.addWidget(self.tableWidget)
-        v_box.addLayout(h_box)
+        self.v_box = QVBoxLayout()
+        self.v_box.addWidget(self.x)
+        self.v_box.addWidget(self.i)
+        self.v_box.addWidget(self.add_btn)
+        self.v_box.addStretch()
+        self.v_box.setContentsMargins(0, 0, 0, 0)
+        self.setLayout(self.v_box)
 
-        self.setLayout(v_box)
-
-        self.b.clicked.connect(self.btn_click)
+        self.add_btn.clicked.connect(self.add_btn_click)
         self.show()
-    
-    def btn_click(self):
+
+    def add_btn_click(self):
         self.queue.append(int(self.i.text()))
-        self.tableWidget.setColumnCount(1)
-        self.tableWidget.setRowCount(1)
-        self.tableWidget.setHorizontalHeaderLabels(["1                "])
-        self.tableWidget.setItem(0, 0, QTableWidgetItem("Cell (0,1)"))
         print(self.queue)
-        self.l.setText('I have been clicked')
+        self.count = self.count + 1
+        self.label.setText('I have been clicked')
+        added = QPushButton('p'+str(self.count))
+        self.v_box.addWidget(added)
+

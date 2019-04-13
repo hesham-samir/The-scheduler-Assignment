@@ -9,6 +9,7 @@ import SJF_Preemptive
 import Priority_NonPreemptive
 import Priority_Preemptive
 
+
 class App(QMainWindow):
 
     def __init__(self):
@@ -21,7 +22,6 @@ class App(QMainWindow):
         self.setWindowTitle(self.title)
         self.setWindowIcon(QIcon("home.png"))
         self.setGeometry(self.left, self.top, self.width, self.height)
-
         self.table_widget = TabDialog()
         self.setCentralWidget(self.table_widget)
 
@@ -43,8 +43,8 @@ class TabDialog(QDialog):
         vboxLayout = QVBoxLayout()
         vboxLayout.addWidget(tabwidget)
 
-
         self.setLayout(vboxLayout)
+
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)
