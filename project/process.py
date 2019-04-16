@@ -110,16 +110,53 @@ class processList():
                 min_burst = i.burst
         return min_burst
 
+    def SJF_P_Sort(self):
+        i = 0
+        current_time = 0
+        first_time = 1
+        no_process_at_time = 1
+        min_id = 0
+        min_burst = self.min_burst()
+        flag_to_queue = 0
 
+        while self.is_finished() == 0:
+            no_process_at_time = 1
+            for i in range(len(self.list)):
+                if self.list[i].burst == 0:
+                    continue
+                elif self.list[i].arrival <= current_time:
+                    no_process_at_time = 0
+                    if first_time:
+                        first_time = 0
+                        min_burst = self.list[i].burst
+                        min_id = i
+                        flag_to_queue = 1
+                    else:
+                        if self.list[i].burst < min_burst:
+                            min_burst = self.list[i].burst
+                            min_id = i
+                            flag_to_queue = 1
+            if self.list[min_id].burst != 0 and flag_to_queue == 1:
+                self.list[min_id].burst = self.list[min_id].burst - 1
+                self.processes_ids.append(min_id + 1)
+                self.processes_bursts.append(1)
+                current_time = current_time + 1
+                #self.list[min_id].burst = 0
+                flag_to_queue = 0
+            first_time = 1
+            if no_process_at_time:
+                current_time = current_time + 1
+                self.processes_ids.append(0)
+                self.processes_bursts.append(1)
 
 # '''p1 = process('p1',1,2,3)
 # p2 = process('p2',2,3,4)
 # plist = [p1, p2]'''
-'''pro_queue = processList()
+pro_queue = processList()
 pro_queue.insert('p1',0,0,3)
 pro_queue.insert('p2',10,0,6)
 pro_queue.insert('p3',4,0,9)
-pro_queue.SJF_NP_Sort()
+pro_queue.SJF_P_Sort()
 print(pro_queue.processes_ids)
 print(pro_queue.processes_bursts)
-print(pro_queue)'''
+print(pro_queue)
